@@ -1,0 +1,29 @@
+---
+- hosts: "myhosts"
+  become: true
+  tasks:
+  - name: "Instal nginx"
+    ansible.builtin.apt:
+      name: "nginx"
+      state: "latest"
+      update_cache: true
+
+  - name: "Delete /var/www/html folder"
+    ansible.builtin.file:
+      path: "/var/www/html"
+      state: "absent"
+
+  - name: "Copy our html to /var/www/html folder"
+    ansible.builtin.copy:
+      src: "html"
+      dest: "/var/www/"
+      owner: "userdeb"
+      group: "userdeb"
+      mode: "0644"
+  
+  - name: "Cope conf file to /etc/nginx/conf.d"
+    ansible.builtin.copy:
+      src: "html/myweb.conf"
+      dest: "/etc/nginx/conf.d/"
+      owner: "userdeb"
+      group: "userdeb"

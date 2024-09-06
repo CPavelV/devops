@@ -1,0 +1,9 @@
+---
+- hosts: "myhosts"
+  become: true
+  tasks:
+  - name: Install NTP-client
+    ansible.builtin.apt:
+      name: chrony
+      state: latest
+   
