@@ -1,5 +1,5 @@
 ---
-- hosts: "myhosts"
+- hosts: "myhost"
   become: true
   tasks:
   - name: "restart nginx"

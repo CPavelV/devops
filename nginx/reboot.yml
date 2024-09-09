@@ -1,5 +1,5 @@
 ---
-- hosts: "myhosts"
+- hosts: "myhost"
   become: yes
 
   tasks:

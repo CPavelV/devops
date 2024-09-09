@@ -1,0 +1,26 @@
+---
+- hosts: "myhost"
+  become: true
+  tasks:
+    - name: Creates directory
+      ansible.builtin.file:
+        path: /data/myweb/www
+        state: directory
+        owner: userdeb
+        group: userdeb
+
+    - name: "Copy our html to /data/myweb/www file"
+      copy:
+        src: "html/index.html"
+        #src: "html/error403.html"
+        dest: "/data/myweb/www"
+        owner: userdeb
+        group: userdeb
+        mode: u=rw,g=r,o=r    
+
+    - name: "Cope conf file to /etc/nginx/conf.d/"
+      ansible.builtin.copy:
+        src: "html/myweb.conf"
+        dest: "/etc/nginx/conf.d/"
+        owner: "userdeb"
+        group: "userdeb"
