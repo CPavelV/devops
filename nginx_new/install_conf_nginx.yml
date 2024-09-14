@@ -1,0 +1,35 @@
+---
+- hosts: "mysrv"
+  become: true
+  tasks:
+  - name: "Instal nginx"
+    ansible.builtin.apt:
+      name: "nginx"
+      state: "latest"
+      update_cache: true
+
+  - template:
+      src: nginx.conf.j2
+      dest: /etc/nginx/conf.d/web.conf
+      owner: pavel
+      group: pavel
+      mode: '0644'
+      backup: yes
+  - service:
+      name: nginx
+      state: restarted
+
+  - name: "Creates directory"
+    ansible.builtin.file:
+      path: /data/myweb/www
+      state: directory
+      owner: pavel
+      group: pavel
+
+  - name: "Copy our html to /data/myweb/www file"
+    copy:
+      src: "index.html"
+      dest: "/data/myweb/www"
+      owner: pavel
+      group: pavel
+      mode: 0644
