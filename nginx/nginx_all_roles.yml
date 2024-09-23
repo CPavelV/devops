@@ -1,0 +1,9 @@
+---
+
+- name: "Roles config"
+  hosts: mysrv
+  become: true
+  roles:
+    - roles
+  vars_files: 
+    - /roles/vars/main.yml

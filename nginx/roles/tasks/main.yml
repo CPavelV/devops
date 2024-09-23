@@ -1,0 +1,57 @@
+---
+
+- name: Install curl gnupg2 ca-certificates lsb-release ubuntu-keyring
+  ansible.builtin.apt:
+    name:
+      - curl
+      - gnupg2
+      - ca-certificates
+      - lsb-release
+      - ubuntu-keyring
+    state: present
+
+- name: "add key repo nginx"
+  ansible.builtin.apt_key:
+    url: https://nginx.org/keys/nginx_signing.key
+    state: present
+
+- name: "add repository nginx"
+  ansible.builtin.apt_repository:
+    repo: deb http://nginx.org/packages/mainline/ubuntu {{ ansible_lsb.codename }} nginx
+    state: present
+
+- name: Update apt packages
+  ansible.builtin.apt:
+    update_cache: yes
+    upgrade: yes
+
+- name: "Install nginx"
+  ansible.builtin.apt:
+    # update_cache: true
+    name: "nginx={{ v_nginx }}"
+    state: present
+    
+# - template:
+#     src: nginx.conf.j2
+#     dest: /etc/nginx/conf.d/web.conf
+#     owner: pavel
+#     group: pavel
+#     mode: '0644'
+#     backup: yes
+
+
+
+# - name: "Creates directory"
+#   ansible.builtin.file:
+#     path: /data/myweb/www
+#     state: directory
+#     owner: pavel
+#     group: pavel
+
+# - name: "Copy our html to /data/myweb/www file"
+#   copy:
+#     src: "index.html"
+#     dest: "/data/myweb/www"
+#     owner: pavel
+#     group: pavel
+#     mode: 0644

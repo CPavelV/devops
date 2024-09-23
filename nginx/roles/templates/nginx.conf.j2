@@ -1,0 +1,23 @@
+server {
+    listen 8080;
+    root /data/myweb/www;
+    index index.html index.htm;
+    
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+     location /api {
+        return 403;
+    }
+}
+
+server {
+    location / {
+        proxy_pass http://10.200.10.20:8080;
+            # root /data/myweb/www;
+    }
+    location ~ \.(gif|jpg|png)$ {
+        root /data/images;
+    }
+}
