@@ -7,7 +7,7 @@ server {
         try_files $uri $uri/ =404;
     }
 
-     location /api {
+     location {{ forbidden_403 }} {
         return 403;
     }
 }

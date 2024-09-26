@@ -1,3 +1,5 @@
 ---
 
-v_nginx: "1.25.5-1~jammy"
+v_nginx: "1.27.1-1~{{ ansible_distribution_release }}"
+forbidden_403: "{{ '/api' }}"
+name_conf_nginx: "{{ 'myweb' }}"
